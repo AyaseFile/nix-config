@@ -18,6 +18,7 @@
       hostname = "<host>";
       system = "x86_64-linux";
       allowUnfree = true;
+      privileged = false;
     in
     {
       nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
@@ -28,6 +29,7 @@
             hostname
             system
             allowUnfree
+            privileged
             ;
         };
         modules = [

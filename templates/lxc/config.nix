@@ -4,6 +4,7 @@
   username,
   hostname,
   allowUnfree,
+  privileged,
   ...
 }:
 
@@ -22,7 +23,7 @@
 
   proxmoxLXC = {
     manageNetwork = false;
-    privileged = true;
+    privileged = privileged;
   };
 
   networking.hostName = hostname;
