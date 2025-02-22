@@ -25,9 +25,11 @@
         };
       };
       packages = {
-        cli = import ./packages/cli.nix;
-        dev = import ./packages/dev.nix;
-        fonts = import ./packages/fonts.nix;
+        grouped = {
+          cli = import ./packages/cli.nix;
+          dev = import ./packages/dev.nix;
+          fonts = import ./packages/fonts.nix;
+        };
       };
     };
 }
