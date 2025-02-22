@@ -34,7 +34,7 @@
         };
         modules = [
           ./config.nix
-          nix-config.packages.cli
+          nix-config.packages.grouped.cli
         ];
       };
     };

@@ -31,9 +31,9 @@
         default = pkgs.symlinkJoin {
           name = "default";
           paths = [
-            (mod nix-config.packages.cli).environment.systemPackages
-            (mod nix-config.packages.dev).environment.systemPackages
-            (mod nix-config.packages.fonts).fonts.packages
+            (mod nix-config.packages.grouped.cli).environment.systemPackages
+            (mod nix-config.packages.grouped.dev).environment.systemPackages
+            (mod nix-config.packages.grouped.fonts).fonts.packages
             pkgs.fish
             pkgs.direnv
             pkgs.nix-direnv
