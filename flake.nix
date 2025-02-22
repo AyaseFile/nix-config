@@ -26,9 +26,9 @@
       };
       packages = {
         grouped = {
-          cli = import ./packages/cli.nix;
-          dev = import ./packages/dev.nix;
-          fonts = import ./packages/fonts.nix;
+          cli = import ./packages/grouped/cli.nix;
+          dev = import ./packages/grouped/dev.nix;
+          fonts = import ./packages/grouped/fonts.nix;
         };
       };
     };
