@@ -5,6 +5,7 @@
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
   outputs =
@@ -12,6 +13,7 @@
       self,
       nixpkgs,
       lanzaboote,
+      vscode-server,
     }:
     {
       specialArgs = { inherit inputs; };
@@ -24,6 +26,17 @@
           ];
         };
         samba = import ./modules/samba.nix;
+        vscode-server = {
+          imports = [
+            vscode-server.nixosModules.default
+            (
+              { config, pkgs, ... }:
+              {
+                services.vscode-server.enable = true;
+              }
+            )
+          ];
+        };
       };
       packages = {
         grouped = {
