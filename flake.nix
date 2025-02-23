@@ -29,6 +29,7 @@
           cli = import ./packages/grouped/cli.nix;
           dev = import ./packages/grouped/dev.nix;
           fonts = import ./packages/grouped/fonts.nix;
+          utils = import ./packages/grouped/utils.nix;
         };
       };
       podman = import ./podman;

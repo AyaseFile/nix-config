@@ -13,15 +13,6 @@
       less
       glow
       chafa
-      gnutar
-      libarchive
-      zip
-      unzip
-      p7zip
-      unar
-      xz
-      zstd
-      par2cmdline
       btop
       lsof
       dust
@@ -34,8 +25,6 @@
       tmux
       fastfetch
       starship
-      ffmpeg-full
-      imagemagick
       git
       lazygit
       git-lfs
