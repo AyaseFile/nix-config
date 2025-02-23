@@ -31,5 +31,6 @@
           fonts = import ./packages/grouped/fonts.nix;
         };
       };
+      podman = import ./podman;
     };
 }
