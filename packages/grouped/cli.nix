@@ -13,6 +13,8 @@
       less
       glow
       chafa
+      gnutar
+      p7zip
       btop
       lsof
       dust
@@ -30,6 +32,8 @@
       git-lfs
       gnupg
       tealdeer
+      coreutils
+      openssl
     ]
     ++ [
       fishPlugins.fifc

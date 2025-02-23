@@ -2,13 +2,9 @@
 
 {
   environment.systemPackages = with pkgs; [
-    coreutils
-    openssl
-    gnutar
     libarchive
     zip
     unzip
-    p7zip
     unar
     xz
     zstd
