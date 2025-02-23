@@ -32,12 +32,7 @@
         vscode-server = {
           imports = [
             vscode-server.nixosModules.default
-            (
-              { config, pkgs, ... }:
-              {
-                services.vscode-server.enable = true;
-              }
-            )
+            ./modules/vscode-server.nix
           ];
         };
       };
