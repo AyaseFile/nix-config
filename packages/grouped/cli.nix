@@ -33,6 +33,7 @@
       gnupg
       tealdeer
       coreutils
+      file
       openssl
     ]
     ++ [
