@@ -35,6 +35,8 @@
             ./modules/vscode-server.nix
           ];
         };
+        frpc = import ./modules/frpc.nix;
+        frps = import ./modules/frps.nix;
       };
       packages = {
         grouped = {
