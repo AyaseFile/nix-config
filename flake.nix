@@ -23,6 +23,7 @@
             ./modules/secureboot.nix
           ];
         };
+        samba = import ./modules/samba.nix;
       };
       packages = {
         grouped = {
