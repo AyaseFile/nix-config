@@ -1,12 +1,15 @@
-{ port, token, ... }:
+frpsConfig:
 
+let
+  cfg = import frpsConfig;
+in
 {
   services.frp = {
     enable = true;
     role = "server";
     settings = {
-      bindPort = port;
-      auth.token = token;
+      bindPort = cfg.port;
+      auth.token = cfg.token;
     };
   };
 }

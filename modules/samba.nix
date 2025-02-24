@@ -1,10 +1,15 @@
+smbConfig:
 { pkgs, ... }:
 
+let
+  cfg = import smbConfig;
+in
 {
   users.users.smbuser = {
     isNormalUser = true;
     group = "nogroup";
     shell = pkgs.shadow + "/bin/nologin";
+    createHome = false;
   };
 
   services.samba = {
@@ -15,8 +20,8 @@
         "security" = "user";
         "map to guest" = "bad user";
         "vfs objects" = "streams_xattr";
-      };
-    };
+      } // (cfg.global or { });
+    } // cfg.settings;
     openFirewall = true;
   };
 

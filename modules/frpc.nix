@@ -1,20 +1,18 @@
-{
-  hostname,
-  addr,
-  port,
-  token,
-  ...
-}:
+frpcConfig:
 
+let
+  cfg = import frpcConfig;
+in
 {
   services.frp = {
     enable = true;
     role = "client";
     settings = {
-      user = hostname;
-      serverAddr = addr;
-      serverPort = port;
-      auth.token = token;
-    };
+      user = cfg.user;
+      serverAddr = cfg.addr;
+      serverPort = cfg.port;
+      auth.token = cfg.token;
+      proxies = cfg.proxies;
+    } // cfg.settings;
   };
 }

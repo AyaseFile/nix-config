@@ -1,5 +1,5 @@
 {
-  config = import ./config.nix;
+  lazydocker = import ./lazydocker.nix;
 
   containers = {
     jellyfin = port: import ./containers/jellyfin.nix { inherit port; };
