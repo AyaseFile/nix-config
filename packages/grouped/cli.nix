@@ -14,7 +14,7 @@
       glow
       chafa
       gnutar
-      p7zip
+      _7zz
       btop
       lsof
       dust
