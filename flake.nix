@@ -38,6 +38,7 @@
         frpc = import ./modules/frpc.nix;
         frps = import ./modules/frps.nix;
         tailscale = import ./modules/tailscale.nix;
+        caddy-cf-dns = import ./modules/caddy-cf-dns.nix;
       };
       packages = {
         grouped = {
