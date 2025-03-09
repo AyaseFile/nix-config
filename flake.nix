@@ -12,33 +12,19 @@
   };
 
   outputs =
-    inputs@{
+    {
       self,
-      nixpkgs,
       lanzaboote,
       vscode-server,
     }:
     {
-      specialArgs = { inherit inputs; };
       nixosModules = {
-        direnv = import ./modules/direnv.nix;
         secureboot = {
           imports = [
             lanzaboote.nixosModules.lanzaboote
             ./modules/secureboot.nix
           ];
         };
-        samba = import ./modules/samba.nix;
-        vscode-server = {
-          imports = [
-            vscode-server.nixosModules.default
-            ./modules/vscode-server.nix
-          ];
-        };
-        frpc = import ./modules/frpc.nix;
-        frps = import ./modules/frps.nix;
-        tailscale = import ./modules/tailscale.nix;
-        caddy-cf-dns = import ./modules/caddy-cf-dns.nix;
       };
       packages = {
         grouped = {
@@ -47,6 +33,18 @@
           fonts = import ./packages/grouped/fonts.nix;
           utils = import ./packages/grouped/utils.nix;
         };
+        direnv = import ./packages/direnv.nix;
+        samba = import ./packages/samba.nix;
+        vscode-server = {
+          imports = [
+            vscode-server.nixosModules.default
+            ./packages/vscode-server.nix
+          ];
+        };
+        frpc = import ./packages/frpc.nix;
+        frps = import ./packages/frps.nix;
+        tailscale = import ./packages/tailscale.nix;
+        caddy-cf-dns = import ./packages/caddy-cf-dns.nix;
       };
       podman = import ./podman;
     };
