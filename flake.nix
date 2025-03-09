@@ -12,12 +12,14 @@
   };
 
   outputs =
-    {
+    inputs@{
       self,
+      nixpkgs,
       lanzaboote,
       vscode-server,
     }:
     {
+      specialArgs = { inherit inputs; };
       nixosModules = {
         secureboot = {
           imports = [
