@@ -34,6 +34,9 @@
       moduleFiles = listFilesRecursive ./modules;
       modules = map nameOf moduleFiles;
 
+      serviceFiles = listFilesRecursive ./services;
+      services = map nameOf serviceFiles;
+
       specialModules = [
         "secureboot"
         "vscode-server"
@@ -52,6 +55,7 @@
 
       nixosModules =
         (genAttrs (filter (name: !(elem name specialModules)) modules) (name: import ./modules/${name}.nix))
+        // (genAttrs services (name: import ./services/${name}.nix))
         // {
           secureboot = import ./modules/secureboot.nix { inherit lanzaboote; };
           vscode-server = import ./modules/vscode-server.nix { inherit vscode-server; };
