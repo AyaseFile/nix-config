@@ -12,42 +12,51 @@
   };
 
   outputs =
-    inputs@{
+    {
       self,
       nixpkgs,
       lanzaboote,
       vscode-server,
     }:
+    let
+      inherit (builtins) elem filter;
+      inherit (nixpkgs.lib) genAttrs replaceStrings;
+      inherit (nixpkgs.lib.filesystem) listFilesRecursive packagesFromDirectoryRecursive;
+
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
+      forAllSystems = f: genAttrs supportedSystems (system: f (import nixpkgs { inherit system; }));
+
+      nameOf = path: replaceStrings [ ".nix" ] [ "" ] (baseNameOf (toString path));
+
+      moduleFiles = listFilesRecursive ./modules;
+      modules = map nameOf moduleFiles;
+
+      specialModules = [
+        "secureboot"
+        "vscode-server"
+        "pkgs"
+        "podman"
+      ];
+    in
     {
-      specialArgs = { inherit inputs; };
-      nixosModules = {
-        secureboot = {
-          imports = [
-            lanzaboote.nixosModules.lanzaboote
-            ./modules/secureboot.nix
-          ];
+      packages = forAllSystems (
+        pkgs:
+        packagesFromDirectoryRecursive {
+          inherit (pkgs) callPackage;
+          directory = ./packages;
+        }
+      );
+
+      nixosModules =
+        (genAttrs (filter (name: !(elem name specialModules)) modules) (name: import ./modules/${name}.nix))
+        // {
+          secureboot = import ./modules/secureboot.nix { inherit lanzaboote; };
+          vscode-server = import ./modules/vscode-server.nix { inherit vscode-server; };
+          pkgs = import ./modules/pkgs;
+          podman = import ./modules/podman;
         };
-      };
-      packages = {
-        grouped = {
-          cli = import ./packages/grouped/cli.nix;
-          dev = import ./packages/grouped/dev.nix;
-          fonts = import ./packages/grouped/fonts.nix;
-          utils = import ./packages/grouped/utils.nix;
-        };
-        direnv = import ./packages/direnv.nix;
-        samba = import ./packages/samba.nix;
-        vscode-server = {
-          imports = [
-            vscode-server.nixosModules.default
-            ./packages/vscode-server.nix
-          ];
-        };
-        frpc = import ./packages/frpc.nix;
-        frps = import ./packages/frps.nix;
-        tailscale = import ./packages/tailscale.nix;
-        caddy-cf-dns = import ./packages/caddy-cf-dns.nix;
-      };
-      podman = import ./podman;
     };
 }

@@ -1,17 +1,35 @@
+{ lanzaboote }:
+
 {
   pkgs,
+  config,
   lib,
   ...
 }:
 
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.modules.secureboot;
+in
 {
-  environment.systemPackages = [
-    pkgs.sbctl
+  imports = [
+    lanzaboote.nixosModules.lanzaboote
   ];
 
-  boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/var/lib/sbctl";
+  options.modules.secureboot = {
+    enable = mkEnableOption "UEFI Secure Boot for NixOS";
+  };
+
+  config = mkIf cfg.enable {
+    environment.systemPackages = [
+      pkgs.sbctl
+    ];
+
+    boot.loader.systemd-boot.enable = lib.mkForce false;
+
+    boot.lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
   };
 }
