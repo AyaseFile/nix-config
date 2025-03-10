@@ -34,6 +34,12 @@ in
       type = types.path;
       description = "Which you path want to save";
     };
+    interval = mkOption {
+      type = types.str;
+      default = "14d";
+      example = "1d";
+      description = "How often to run the sync (systemd time format)";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -58,7 +64,7 @@ in
       wantedBy = [ "timers.target" ];
       wants = [ "fanbox-archive.service" ];
       timerConfig = {
-        OnUnitActiveSec = "14d";
+        OnUnitActiveSec = cfg.interval;
         AccuracySec = "1h";
         Persistent = true;
       };
