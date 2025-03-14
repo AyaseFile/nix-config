@@ -32,7 +32,7 @@
         };
         modules = [
           ./config.nix
-          nix-config.packages.grouped.cli
+          ./nix-config.nix
         ];
       };
     };

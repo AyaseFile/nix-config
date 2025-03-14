@@ -39,10 +39,7 @@
         };
         modules = [
           ./config.nix
-          nix-config.packages.grouped.cli
-          nix-config.packages.grouped.fonts
-          nix-config.packages.grouped.dev
-          nix-config.nixosModules.direnv
+          ./nix-config.nix
         ];
       };
     };

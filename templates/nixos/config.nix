@@ -1,7 +1,7 @@
 {
+  pkgs,
   config,
   lib,
-  pkgs,
   username,
   hostname,
   allowUnfree,
@@ -30,8 +30,8 @@
   boot.initrd.systemd.enable = true;
   boot.initrd.luks.devices."system".crypttabExtraOpts = [
     "tpm2-device=auto"
-    "discard"
     "password-echo=no"
+    "discard"
   ];
 
   fileSystems."/var/log".neededForBoot = true;

@@ -28,8 +28,8 @@
                 settings = {
                   crypttabExtraOpts = [
                     "tpm2-device=auto"
-                    "discard"
                     "password-echo=no"
+                    "discard"
                   ];
                 };
                 content = {
