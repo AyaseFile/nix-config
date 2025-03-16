@@ -15,7 +15,12 @@
 
   modules.direnv.enable = true;
 
-  homebrew.casks = [
-    "wezterm"
-  ];
+  homebrew = {
+    brews = [
+      "pinentry-mac"
+    ];
+    casks = [
+      "wezterm"
+    ];
+  };
 }

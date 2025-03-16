@@ -52,9 +52,6 @@ in
       ]
       ++ [
         fishPlugins.fifc
-      ]
-      ++ lib.optionals (system == "aarch64-darwin") [
-        pinentry_mac
       ];
   };
 }
