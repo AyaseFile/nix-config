@@ -71,7 +71,7 @@ in
       description = "EhArchive";
       serviceConfig = {
         Type = "exec";
-        ExecStart = "${pkg}/bin/eh-archive --port ${cfg.port} --archive-output ${cfg.output} --library-root ${cfg.calibreLibrary} --tag-db-root ${cfg.tagDb}";
+        ExecStart = "${pkg}/bin/eh-archive --port ${cfg.port} --archive-output ${cfg.archiveOutput} --library-root ${cfg.libraryRoot} --tag-db-root ${cfg.tagDbRoot}";
         User = cfg.user;
         Group = cfg.group;
         StandardOutput = "journal";
