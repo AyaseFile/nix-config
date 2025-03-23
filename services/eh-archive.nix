@@ -11,6 +11,7 @@ let
     mkOption
     mkIf
     types
+    optionalAttrs
     ;
   cfg = config.services.eh-archive;
   pkg = pkgs.callPackage ../packages/eh-archive.nix { };
@@ -83,7 +84,7 @@ in
           EH_AUTH_ID = cfg.memberId;
           EH_AUTH_HASH = cfg.passHash;
         }
-        // lib.optionalAttrs cfg.igneous {
+        // optionalAttrs (cfg.igneous != null) {
           EH_AUTH_IGNEOUS = cfg.igneous;
         };
     };
