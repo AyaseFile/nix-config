@@ -32,7 +32,7 @@ in
     };
     output = mkOption {
       type = types.path;
-      description = "Which you path want to save";
+      description = "Which path you want to save";
     };
     interval = mkOption {
       type = types.str;
