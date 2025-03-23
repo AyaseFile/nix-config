@@ -14,7 +14,7 @@ rustPlatform.buildRustPackage rec {
     owner = "AyaseFile";
     repo = pname;
     rev = "v${version}";
-    sha256 = "sha256-SMXSEbs4LIx4eCwJ9ayGGGazBHIf3KVNescSFNRFl2Q=";
+    sha256 = "sha256-0c2RCVlXfOkHDNoJIORiVAjpZBno3t4Erw8X68eG2bc=";
   };
 
   useFetchCargoVendor = true;
