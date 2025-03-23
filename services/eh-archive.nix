@@ -68,8 +68,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    networking.firewall.allowedTCPPorts = [ cfg.port ];
+
     systemd.services.eh-archive = {
       description = "EhArchive";
+      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "exec";
         ExecStart = "${pkg}/bin/eh-archive --port ${toString cfg.port} --archive-output ${cfg.archiveOutput} --library-root ${cfg.libraryRoot} --tag-db-root ${cfg.tagDbRoot}";
