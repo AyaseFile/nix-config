@@ -8,17 +8,17 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "FanboxArchive";
-  version = "0.3.5";
+  version = "0.4.1";
 
   src = fetchFromGitHub {
     owner = "xiao-e-yun";
     repo = pname;
     rev = "v${version}";
-    sha256 = "sha256-suTGRCLWVYU2Vg7em0bZ5aSxa8FtiqtJqFU35kvpSVI=";
+    sha256 = "sha256-kbElU/ihUL9VwV1CFIFkvD9lhNRFGj5Or8pDf9wGW8I=";
   };
 
   useFetchCargoVendor = true;
-  cargoHash = "sha256-AqacwKS/UbbKPbYU3ovBTu/aSKKBUuM5gTbd8JrX8HI=";
+  cargoHash = "sha256-AvZ/vbICOAhkcG6zhENNq0UFEOr7xFPp6ejHsQHroHE=";
 
   RUSTC_BOOTSTRAP = 1;
   nativeBuildInputs = [

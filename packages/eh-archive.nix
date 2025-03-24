@@ -8,17 +8,17 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "EhArchive";
-  version = "0.1.0";
+  version = "0.1.1";
 
   src = fetchFromGitHub {
     owner = "AyaseFile";
     repo = pname;
     rev = "v${version}";
-    sha256 = "sha256-0c2RCVlXfOkHDNoJIORiVAjpZBno3t4Erw8X68eG2bc=";
+    sha256 = "sha256-+ujTxhkn/JkFkdDI4eBiZDc0G7q/rbF4P1tlyykw79I=";
   };
 
   useFetchCargoVendor = true;
-  cargoHash = "sha256-RmST5x1to0VmSt6GpADxE/vCCN2+MgowXXlMFNssr0M=";
+  cargoHash = "sha256-o1W2tylF85ehprmWQykvZWu7f+uyaPOcofQlpmQ6hO8=";
 
   env.RUSTC_BOOTSTRAP = 1;
   nativeBuildInputs = [
