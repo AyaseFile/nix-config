@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   ...
@@ -40,13 +39,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.users.smbuser = {
-      isNormalUser = true;
-      group = "nogroup";
-      shell = pkgs.shadow + "/bin/nologin";
-      createHome = false;
-    };
-
     services.samba = {
       enable = true;
       settings = {
