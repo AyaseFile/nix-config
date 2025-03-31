@@ -16,7 +16,7 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      nil
+      nixd
       nixfmt-rfc-style
       uv
     ];
