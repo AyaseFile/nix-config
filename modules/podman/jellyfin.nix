@@ -20,17 +20,17 @@ in
 
     mediaPath = mkOption {
       type = types.str;
-      default = "/mnt/store/jellyfin/media";
+      default = "/mnt/data/jellyfin/media";
     };
 
     configPath = mkOption {
       type = types.str;
-      default = "/mnt/store/jellyfin/config";
+      default = "/mnt/data/jellyfin/config";
     };
 
     cachePath = mkOption {
       type = types.str;
-      default = "/mnt/store/jellyfin/cache";
+      default = "/mnt/data/jellyfin/cache";
     };
   };
 

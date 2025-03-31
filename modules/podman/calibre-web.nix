@@ -20,12 +20,12 @@ in
 
     configPath = mkOption {
       type = types.str;
-      default = "/mnt/store/calibre/config";
+      default = "/mnt/data/calibre/config";
     };
 
     booksPath = mkOption {
       type = types.str;
-      default = "/mnt/store/calibre/books";
+      default = "/mnt/data/calibre/books";
     };
   };
 

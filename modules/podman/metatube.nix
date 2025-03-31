@@ -20,7 +20,7 @@ in
 
     configPath = mkOption {
       type = types.str;
-      default = "/mnt/store/metatube/config";
+      default = "/mnt/data/metatube/config";
     };
   };
 
