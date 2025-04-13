@@ -1,7 +1,5 @@
 {
   pkgs,
-  config,
-  lib,
   username,
   hostname,
   allowUnfree,
@@ -12,6 +10,40 @@
   imports = [
     ./hardware-config.nix
   ];
+
+  fileSystems."/".options = [
+    "compress=zstd"
+    "noatime"
+  ];
+
+  fileSystems."/home".options = [
+    "compress=zstd"
+    "noatime"
+  ];
+
+  fileSystems."/nix".options = [
+    "compress=zstd"
+    "noatime"
+  ];
+
+  fileSystems."/swap".options = [
+    "noatime"
+  ];
+
+  fileSystems."/var/log".options = [
+    "compress=zstd"
+    "noatime"
+  ];
+
+  fileSystems."/var/log".neededForBoot = true;
+
+  swapDevices = [ { device = "/swap/swapfile"; } ];
+
+  services.fstrim.enable = true;
+
+  services.btrfs.autoScrub.enable = true;
+
+  boot.initrd.compressor = "zstd";
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -34,10 +66,7 @@
     "discard"
   ];
 
-  fileSystems."/var/log".neededForBoot = true;
-
   hardware.enableAllFirmware = true;
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   networking.hostName = hostname;
   networking.networkmanager.enable = true;
@@ -80,6 +109,8 @@
       PasswordAuthentication = false;
     };
   };
+
+  services.fwupd.enable = true;
 
   networking.firewall.enable = true;
 
