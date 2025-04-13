@@ -18,36 +18,50 @@ in
     environment.systemPackages =
       with pkgs;
       [
-        fzf
         fd
-        zoxide
-        eza
+        fzf
         yazi
-        bat
-        less
-        glow
-        chafa
-        gnutar
-        _7zz
-        btop
+        zoxide
+      ]
+      ++ [
+        eza
+        file
         lsof
+      ]
+      ++ [
+        bat
+        delta
+        chafa
+        glow
+        less
+        ripgrep
+      ]
+      ++ [
+        btop
         dust
         ncdu
-        ripgrep
-        jq
-        delta
-        vim
+      ]
+      ++ [
+        _7zz
+        gnutar
+      ]
+      ++ [
         byobu
         tmux
+        vim
+      ]
+      ++ [
         fastfetch
         starship
-        git
-        lazygit
-        git-lfs
-        gnupg
         tealdeer
-        coreutils
-        file
+      ]
+      ++ [
+        git
+        git-lfs
+        lazygit
+      ]
+      ++ [
+        gnupg
         openssl
       ]
       ++ [

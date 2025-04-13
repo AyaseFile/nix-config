@@ -15,16 +15,27 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      libarchive
-      zip
-      unzip
-      unar
-      xz
-      zstd
-      par2cmdline
-      ffmpeg-full
-      imagemagick
-    ];
+    environment.systemPackages =
+      with pkgs;
+      [
+        libarchive
+        zip
+        unzip
+        unar
+      ]
+      ++ [
+        xz
+        zstd
+      ]
+      ++ [
+        par2cmdline
+      ]
+      ++ [
+        jq
+      ]
+      ++ [
+        ffmpeg-full
+        imagemagick
+      ];
   };
 }

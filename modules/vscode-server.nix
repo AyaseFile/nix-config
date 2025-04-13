@@ -1,7 +1,6 @@
 { vscode-server }:
 
 {
-  pkgs,
   config,
   lib,
   ...

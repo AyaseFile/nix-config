@@ -15,10 +15,14 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      nixd
-      nixfmt-rfc-style
-      uv
-    ];
+    environment.systemPackages =
+      with pkgs;
+      [
+        nixd
+        nixfmt-rfc-style
+      ]
+      ++ [
+        uv
+      ];
   };
 }
