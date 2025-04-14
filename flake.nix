@@ -9,6 +9,10 @@
       url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nur-packages = {
+      url = "github:AyaseFile/nur-packages/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -17,6 +21,7 @@
       nixpkgs,
       lanzaboote,
       vscode-server,
+      nur-packages,
     }:
     let
       inherit (builtins) elem filter;
@@ -33,6 +38,7 @@
         "vscode-server"
         "pkgs"
         "podman"
+        "gnome"
       ];
     in
     {
@@ -43,6 +49,7 @@
           vscode-server = import ./modules/vscode-server.nix { inherit vscode-server; };
           pkgs = import ./modules/pkgs;
           podman = import ./modules/podman;
+          gnome = import ./modules/gnome.nix { inherit nur-packages; };
         };
     };
 }

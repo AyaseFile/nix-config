@@ -1,3 +1,5 @@
+{ nur-packages }:
+
 {
   pkgs,
   config,
@@ -11,8 +13,9 @@ let
     mkIf
     mkForce
     ;
+  nur-pkgs = nur-packages.legacyPackages.${pkgs.system};
   cfg = config.modules.gnome;
-  rime-ice = pkgs.callPackage ../packages/rime-ice.nix { };
+  rime-ice = nur-pkgs.rime-ice;
 in
 {
   options.modules.gnome.enable = mkEnableOption "GNOME desktop manager";
