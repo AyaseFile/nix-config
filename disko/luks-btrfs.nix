@@ -39,7 +39,6 @@
                     "@" = {
                       mountpoint = "/";
                       mountOptions = [
-                        "subvol=@"
                         "noatime"
                         "compress=zstd"
                       ];
@@ -47,7 +46,6 @@
                     "@home" = {
                       mountpoint = "/home";
                       mountOptions = [
-                        "subvol=@home"
                         "noatime"
                         "compress=zstd"
                       ];
@@ -55,7 +53,6 @@
                     "@nix" = {
                       mountpoint = "/nix";
                       mountOptions = [
-                        "subvol=@nix"
                         "noatime"
                         "compress=zstd"
                       ];
@@ -63,7 +60,6 @@
                     "@log" = {
                       mountpoint = "/var/log";
                       mountOptions = [
-                        "subvol=@log"
                         "noatime"
                         "compress=zstd"
                       ];
@@ -71,7 +67,6 @@
                     "@swap" = {
                       mountpoint = "/swap";
                       mountOptions = [
-                        "subvol=@swap"
                         "noatime"
                       ];
                       swap.swapfile.size = "<swap_size>";
