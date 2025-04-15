@@ -13,7 +13,7 @@ let
     mkIf
     mkForce
     ;
-  nur-pkgs = nur-packages.legacyPackages.${pkgs.system};
+  nur-pkgs = nur-packages.packages.${pkgs.system};
   cfg = config.modules.gnome;
   rime-ice = nur-pkgs.rime-ice;
 in
