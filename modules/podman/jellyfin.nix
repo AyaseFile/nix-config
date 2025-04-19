@@ -19,17 +19,17 @@ in
     };
 
     mediaPath = mkOption {
-      type = types.str;
+      type = types.path;
       default = "/mnt/data/jellyfin/media";
     };
 
     configPath = mkOption {
-      type = types.str;
+      type = types.path;
       default = "/mnt/data/jellyfin/config";
     };
 
     cachePath = mkOption {
-      type = types.str;
+      type = types.path;
       default = "/mnt/data/jellyfin/cache";
     };
   };

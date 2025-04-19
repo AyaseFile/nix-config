@@ -19,7 +19,7 @@ in
     };
 
     configPath = mkOption {
-      type = types.str;
+      type = types.path;
       default = "/mnt/data/metatube/config";
     };
   };

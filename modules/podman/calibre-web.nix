@@ -19,12 +19,12 @@ in
     };
 
     configPath = mkOption {
-      type = types.str;
+      type = types.path;
       default = "/mnt/data/calibre/config";
     };
 
     booksPath = mkOption {
-      type = types.str;
+      type = types.path;
       default = "/mnt/data/calibre/books";
     };
   };
