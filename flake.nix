@@ -39,6 +39,7 @@
         "pkgs"
         "podman"
         "gnome"
+        "kde"
       ];
     in
     {
@@ -50,6 +51,7 @@
           pkgs = import ./modules/pkgs;
           podman = import ./modules/podman;
           gnome = import ./modules/gnome.nix { inherit nur-packages; };
+          kde = import ./modules/kde.nix { inherit nur-packages; };
         };
     };
 }
