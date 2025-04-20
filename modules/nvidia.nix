@@ -26,13 +26,13 @@ in
       nvidiaSettings = true;
       powerManagement.enable = true;
       powerManagement.finegrained = false;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      package = pkgs.linuxKernel.packages.linux_zen.nvidia_x11;
     };
 
     nixpkgs.config.cudaSupport = true;
 
     environment.variables = {
-      LD_LIBRARY_PATH = "${pkgs.linuxPackages.nvidia_x11}/lib";
+      LD_LIBRARY_PATH = "${config.hardware.nvidia.package}/lib";
     };
   };
 }
