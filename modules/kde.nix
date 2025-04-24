@@ -53,6 +53,7 @@ in
       [
         pinentry-gnome3
         seahorse
+        kdePackages.kdialog
       ]
       ++ [
         kde-rounded-corners
