@@ -1,17 +1,24 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    ;
   cfg = config.modules.pkgs.cli;
 in
 {
   options.modules.pkgs.cli = {
-    enable = mkEnableOption "CLI packages";
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {

@@ -1,13 +1,13 @@
 { vscode-server }:
 
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    ;
   cfg = config.modules.vscode-server;
 in
 {
@@ -16,7 +16,10 @@ in
   ];
 
   options.modules.vscode-server = {
-    enable = mkEnableOption "Visual Studio Code Server support in NixOS";
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {

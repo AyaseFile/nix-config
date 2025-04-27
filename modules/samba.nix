@@ -1,12 +1,7 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 
 let
   inherit (lib)
-    mkEnableOption
     mkOption
     mkIf
     types
@@ -15,24 +10,29 @@ let
 in
 {
   options.modules.samba = {
-    enable = mkEnableOption "Standard Windows interoperability suite of programs for Linux and Unix";
-
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
     workgroup = mkOption {
-      type = types.str;
+      type = types.singleLineStr;
       default = "WORKGROUP";
     };
-
     security = mkOption {
-      type = types.str;
+      type = types.enum;
+      options = [
+        "auto"
+        "user"
+        "domain"
+        "ads"
+      ];
       default = "user";
     };
-
     shares = mkOption {
       type = types.attrsOf (types.attrsOf types.str);
       default = { };
     };
-
-    globalExtraOptions = mkOption {
+    extraOpts = mkOption {
       type = types.attrsOf types.str;
       default = { };
     };
@@ -47,7 +47,7 @@ in
           "security" = cfg.security;
           "map to guest" = "bad user";
           "vfs objects" = "streams_xattr";
-        } // cfg.globalExtraOptions;
+        } // cfg.extraOpts;
       } // cfg.shares;
       openFirewall = true;
     };

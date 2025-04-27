@@ -1,24 +1,28 @@
 { nur-packages }:
 
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
   inherit (lib)
-    mkEnableOption
+    mkOption
     mkIf
     mkForce
+    types
     ;
   nur-pkgs = nur-packages.packages.${pkgs.system};
   cfg = config.modules.kde;
   rime-ice = nur-pkgs.rime-ice;
 in
 {
-  options.modules.kde.enable = mkEnableOption "KDE Plasma 6";
+  options.modules.kde.enable = mkOption {
+    type = types.bool;
+    default = false;
+  };
 
   config = mkIf cfg.enable {
     services = {

@@ -1,24 +1,28 @@
 { nur-packages }:
 
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
   inherit (lib)
-    mkEnableOption
+    mkOption
     mkIf
     mkForce
+    types
     ;
   nur-pkgs = nur-packages.packages.${pkgs.system};
   cfg = config.modules.gnome;
   rime-ice = nur-pkgs.rime-ice;
 in
 {
-  options.modules.gnome.enable = mkEnableOption "GNOME desktop manager";
+  options.modules.gnome.enable = mkOption {
+    type = types.bool;
+    default = false;
+  };
 
   config = mkIf cfg.enable {
     services.xserver.enable = true;

@@ -1,17 +1,24 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    ;
   cfg = config.modules.pkgs.dev;
 in
 {
   options.modules.pkgs.dev = {
-    enable = mkEnableOption "Dev packages";
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {

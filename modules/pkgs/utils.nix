@@ -1,17 +1,24 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    ;
   cfg = config.modules.pkgs.utils;
 in
 {
   options.modules.pkgs.utils = {
-    enable = mkEnableOption "Utility packages";
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {

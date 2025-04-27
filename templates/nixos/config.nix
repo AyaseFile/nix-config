@@ -1,56 +1,51 @@
 {
   pkgs,
-  username,
-  hostname,
-  allowUnfree,
+  host,
+  unfree,
+  user,
   ...
 }:
 
 {
-  imports = [
-    ./hardware-config.nix
-  ];
-
-  fileSystems."/".options = [
-    "compress=zstd"
-    "noatime"
-  ];
-
-  fileSystems."/home".options = [
-    "compress=zstd"
-    "noatime"
-  ];
-
-  fileSystems."/nix".options = [
-    "compress=zstd"
-    "noatime"
-  ];
-
-  fileSystems."/swap".options = [
-    "noatime"
-  ];
-
-  fileSystems."/var/log".options = [
-    "compress=zstd"
-    "noatime"
-  ];
-
-  fileSystems."/var/log".neededForBoot = true;
-
-  swapDevices = [ { device = "/swap/swapfile"; } ];
-
-  services.fstrim.enable = true;
-
-  services.btrfs.autoScrub.enable = true;
-
-  boot.initrd.compressor = "zstd";
+  imports = [ ./hardware-config.nix ];
 
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
 
-  nixpkgs.config.allowUnfree = allowUnfree;
+  nixpkgs.config.allowUnfree = unfree;
+
+  fileSystems = {
+    "/".options = [
+      "compress=zstd"
+      "noatime"
+    ];
+    "/home".options = [
+      "compress=zstd"
+      "noatime"
+    ];
+    "/nix".options = [
+      "compress=zstd"
+      "noatime"
+    ];
+    "/swap".options = [
+      "noatime"
+    ];
+    "/var/log" = {
+      options = [
+        "compress=zstd"
+        "noatime"
+      ];
+      neededForBoot = true;
+    };
+  };
+
+  swapDevices = [ { device = "/swap/swapfile"; } ];
+
+  services.fstrim.enable = true;
+
+  services.btrfs.autoScrub.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.supportedFilesystems = [ "btrfs" ];
@@ -59,6 +54,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/efi";
 
+  boot.initrd.compressor = "zstd";
   boot.initrd.systemd.enable = true;
   boot.initrd.luks.devices."system".crypttabExtraOpts = [
     "tpm2-device=auto"
@@ -67,9 +63,11 @@
   ];
 
   hardware.enableAllFirmware = true;
+  services.fwupd.enable = true;
 
-  networking.hostName = hostname;
+  networking.hostName = host;
   networking.networkmanager.enable = true;
+  networking.firewall.enable = true;
 
   time.timeZone = "Asia/Shanghai";
 
@@ -82,24 +80,18 @@
     pulse.enable = true;
   };
 
-  users.users.${username} = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
+  users = {
+    defaultUserShell = pkgs.fish;
+    users.${user} = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" ];
+    };
   };
-  users.defaultUserShell = pkgs.fish;
 
   programs.fish = {
     enable = true;
     vendor.config.enable = true;
     vendor.functions.enable = true;
-  };
-
-  environment.systemPackages = with pkgs; [
-    git
-  ];
-
-  programs.gnupg.agent = {
-    enable = true;
   };
 
   services.openssh = {
@@ -110,9 +102,18 @@
     };
   };
 
-  services.fwupd.enable = true;
+  environment.systemPackages = with pkgs; [
+    git
+  ];
 
-  networking.firewall.enable = true;
+  programs.gnupg.agent.enable = true;
+
+  systemd.targets = {
+    sleep.enable = false;
+    suspend.enable = false;
+    hibernate.enable = false;
+    hybrid-sleep.enable = false;
+  };
 
   system.stateVersion = "25.05";
 }

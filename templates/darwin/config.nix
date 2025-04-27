@@ -1,29 +1,35 @@
 {
   self,
   pkgs,
-  username,
   uid,
-  allowUnfree,
+  user,
+  unfree,
   ...
 }:
 
 {
-  nix.enable = true;
-  nix.settings = {
-    sandbox = true;
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
+  nix = {
+    enable = true;
+    settings = {
+      sandbox = true;
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
   };
 
-  nixpkgs.config.allowUnfree = allowUnfree;
+  nixpkgs.config.allowUnfree = unfree;
 
-  users.knownUsers = [ username ];
-  users.users.${username} = {
-    uid = uid;
-    shell = pkgs.fish;
+  users = {
+    knownUsers = [ user ];
+    users.${user} = {
+      uid = uid;
+      shell = pkgs.fish;
+    };
   };
+
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   programs.fish = {
     enable = true;
@@ -35,14 +41,16 @@
     git
   ];
 
-  security.pam.services.sudo_local.touchIdAuth = true;
-
   homebrew = {
     enable = true;
+    global = {
+      autoUpdate = true;
+      lockfiles = true;
+    };
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      cleanup = "uninstall";
+      cleanup = "zap";
     };
   };
 

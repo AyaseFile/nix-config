@@ -1,17 +1,24 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    ;
   cfg = config.modules.direnv;
 in
 {
   options.modules.direnv = {
-    enable = mkEnableOption "Shell extension that manages your environment";
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {

@@ -2,7 +2,6 @@
 
 let
   inherit (lib)
-    mkEnableOption
     mkOption
     mkIf
     types
@@ -11,18 +10,18 @@ let
 in
 {
   options.modules.podman.calibre-web = {
-    enable = mkEnableOption "Web app for browsing, reading and downloading eBooks stored in a Calibre database";
-
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
     port = mkOption {
       type = types.port;
       default = 8083;
     };
-
     configPath = mkOption {
       type = types.path;
       default = "/mnt/data/calibre/config";
     };
-
     booksPath = mkOption {
       type = types.path;
       default = "/mnt/data/calibre/books";

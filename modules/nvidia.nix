@@ -1,19 +1,23 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
   inherit (lib)
-    mkEnableOption
+    mkOption
     mkIf
+    types
     ;
   cfg = config.modules.nvidia;
 in
 {
-  options.modules.nvidia.enable = mkEnableOption "NVIDIA open-source driver";
+  options.modules.nvidia.enable = mkOption {
+    type = types.bool;
+    default = false;
+  };
 
   config = mkIf cfg.enable {
     hardware.graphics.enable = true;

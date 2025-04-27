@@ -12,29 +12,26 @@
   };
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      nix-darwin,
-      nix-config,
-    }:
+    inputs@{ nix-darwin, ... }:
     let
-      username = "<user>";
       uid = 501;
-      hostname = "<host>";
+      user = "<user>";
+      host = "<host>";
       system = "aarch64-darwin";
-      allowUnfree = true;
+      unfree = true;
+      nix-mods = inputs.nix-config.modules;
     in
     {
-      darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
+      darwinConfigurations.${host} = nix-darwin.lib.darwinSystem {
         system = "${system}";
         specialArgs = inputs // {
           inherit
-            username
             uid
-            hostname
+            user
+            host
             system
-            allowUnfree
+            unfree
+            nix-mods
             ;
         };
         modules = [

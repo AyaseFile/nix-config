@@ -1,12 +1,19 @@
 { config, lib, ... }:
 
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    ;
   cfg = config.modules.tailscale;
 in
 {
   options.modules.tailscale = {
-    enable = mkEnableOption "Node agent for Tailscale, a mesh VPN built on WireGuard";
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {

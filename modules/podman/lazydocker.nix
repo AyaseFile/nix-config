@@ -1,13 +1,12 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
   inherit (lib)
-    mkEnableOption
     mkOption
     mkIf
     types
@@ -16,10 +15,12 @@ let
 in
 {
   options.modules.podman.lazydocker = {
-    enable = mkEnableOption "Simple terminal UI for both docker and docker-compose";
-
-    username = mkOption {
-      type = types.str;
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
+    user = mkOption {
+      type = types.singleLineStr;
     };
   };
 
@@ -33,6 +34,6 @@ in
       dockerSocket.enable = true;
     };
 
-    users.users.${cfg.username}.extraGroups = [ "podman" ];
+    users.users.${cfg.user}.extraGroups = [ "podman" ];
   };
 }

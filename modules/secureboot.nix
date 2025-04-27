@@ -1,14 +1,18 @@
 { lanzaboote }:
 
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkOption
+    mkIf
+    types
+    ;
   cfg = config.modules.secureboot;
 in
 {
@@ -17,7 +21,10 @@ in
   ];
 
   options.modules.secureboot = {
-    enable = mkEnableOption "UEFI Secure Boot for NixOS";
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {

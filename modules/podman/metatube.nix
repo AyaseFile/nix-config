@@ -2,7 +2,6 @@
 
 let
   inherit (lib)
-    mkEnableOption
     mkOption
     mkIf
     types
@@ -11,13 +10,14 @@ let
 in
 {
   options.modules.podman.metatube = {
-    enable = mkEnableOption "Metadata Tube API Server";
-
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
     port = mkOption {
       type = types.port;
       default = 8080;
     };
-
     configPath = mkOption {
       type = types.path;
       default = "/mnt/data/metatube/config";

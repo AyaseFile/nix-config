@@ -2,7 +2,6 @@
 
 let
   inherit (lib)
-    mkEnableOption
     mkOption
     mkIf
     types
@@ -11,23 +10,22 @@ let
 in
 {
   options.modules.podman.jellyfin = {
-    enable = mkEnableOption "Free Software Media System";
-
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
     port = mkOption {
       type = types.port;
       default = 8096;
     };
-
     mediaPath = mkOption {
       type = types.path;
       default = "/mnt/data/jellyfin/media";
     };
-
     configPath = mkOption {
       type = types.path;
       default = "/mnt/data/jellyfin/config";
     };
-
     cachePath = mkOption {
       type = types.path;
       default = "/mnt/data/jellyfin/cache";

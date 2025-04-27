@@ -8,28 +8,23 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      nix-config,
-    }:
+    inputs@{ nixpkgs, ... }:
     let
       system = "x86_64-linux";
-      allowUnfree = true;
+      unfree = true;
       pkgs = import nixpkgs {
         inherit system;
         config = {
-          allowUnfree = allowUnfree;
+          allowUnfree = unfree;
         };
       };
       evalModule =
         module:
         let
           fakeLib = nixpkgs.lib // {
-            mkEnableOption = _: true;
+            mkOption = _: true;
             mkIf = cond: val: if cond then val else { };
           };
-
           result = module {
             inherit pkgs;
             lib = fakeLib;
@@ -40,15 +35,13 @@
               utils.enable = true;
             };
           };
-
           config = result.config or { };
         in
         config.environment.systemPackages or config.fonts.packages or [ ];
-
-      cli = evalModule (import "${nix-config}/modules/pkgs/cli.nix");
-      dev = evalModule (import "${nix-config}/modules/pkgs/dev.nix");
-      fonts = evalModule (import "${nix-config}/modules/pkgs/fonts.nix");
-      utils = evalModule (import "${nix-config}/modules/pkgs/utils.nix");
+      cli = evalModule (import "${inputs.nix-config}/modules/pkgs/cli.nix");
+      dev = evalModule (import "${inputs.nix-config}/modules/pkgs/dev.nix");
+      fonts = evalModule (import "${inputs.nix-config}/modules/pkgs/fonts.nix");
+      utils = evalModule (import "${inputs.nix-config}/modules/pkgs/utils.nix");
     in
     {
       packages.${system} = {

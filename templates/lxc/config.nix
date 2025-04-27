@@ -1,10 +1,10 @@
 {
-  pkgs,
   modulesPath,
-  username,
-  hostname,
-  allowUnfree,
+  pkgs,
+  host,
   privileged,
+  unfree,
+  user,
   ...
 }:
 
@@ -19,32 +19,25 @@
     ];
   };
 
-  nixpkgs.config.allowUnfree = allowUnfree;
+  nixpkgs.config.allowUnfree = unfree;
 
   proxmoxLXC = {
     manageNetwork = false;
     privileged = privileged;
   };
 
-  networking.hostName = hostname;
+  networking.hostName = host;
+  networking.firewall.enable = true;
 
   time.timeZone = "Asia/Shanghai";
 
-  users.users.${username} = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
+  users = {
+    defaultUserShell = pkgs.fish;
+    users.${user} = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" ];
+    };
   };
-  users.defaultUserShell = pkgs.fish;
-
-  programs.fish = {
-    enable = true;
-    vendor.config.enable = true;
-    vendor.functions.enable = true;
-  };
-
-  environment.systemPackages = with pkgs; [
-    git
-  ];
 
   security.sudo.extraRules = [
     {
@@ -58,6 +51,12 @@
     }
   ];
 
+  programs.fish = {
+    enable = true;
+    vendor.config.enable = true;
+    vendor.functions.enable = true;
+  };
+
   services.openssh = {
     enable = true;
     settings = {
@@ -66,7 +65,9 @@
     };
   };
 
-  networking.firewall.enable = true;
+  environment.systemPackages = with pkgs; [
+    git
+  ];
 
   system.stateVersion = "25.05";
 }

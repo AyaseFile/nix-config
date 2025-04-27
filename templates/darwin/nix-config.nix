@@ -1,9 +1,9 @@
-{ nix-config, ... }:
+{ pkgs, nix-mods, ... }:
 
 {
   imports = [
-    nix-config.nixosModules.pkgs
-    nix-config.nixosModules.direnv
+    nix-mods.pkgs
+    nix-mods.direnv
   ];
 
   modules.pkgs = {
@@ -15,12 +15,17 @@
 
   modules.direnv.enable = true;
 
+  environment.systemPackages = with pkgs; [
+    coreutils
+    rsync
+  ];
+
   homebrew = {
     brews = [
       "pinentry-mac"
     ];
     casks = [
-      "wezterm"
+      "wezterm@nightly"
     ];
   };
 }

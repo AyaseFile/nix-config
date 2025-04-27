@@ -4,30 +4,39 @@
     nix-config = {
       url = "github:AyaseFile/nix-config/main";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nur-packages.follows = "nur-packages";
+    };
+    nur-packages = {
+      url = "github:AyaseFile/nur-packages/main";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      nix-config,
-    }:
+    inputs@{ nixpkgs, ... }:
     let
-      username = "<user>";
-      hostname = "<host>";
+      user = "<user>";
+      host = "<host>";
       system = "x86_64-linux";
-      allowUnfree = true;
+      unfree = true;
+      flake = "<flake>";
+      nix-mods = inputs.nix-config.modules;
+      nur-mods = inputs.nur-packages.modules;
+      nur-pkgs = inputs.nur-packages.packages.${system};
     in
     {
-      nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.${host} = nixpkgs.lib.nixosSystem {
         system = "${system}";
         specialArgs = inputs // {
           inherit
-            username
-            hostname
+            user
+            host
             system
-            allowUnfree
+            unfree
+            flake
+            nix-mods
+            nur-mods
+            nur-pkgs
             ;
         };
         modules = [

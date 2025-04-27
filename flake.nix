@@ -17,11 +17,11 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       lanzaboote,
       vscode-server,
       nur-packages,
+      ...
     }:
     let
       inherit (builtins) elem filter;
