@@ -19,8 +19,7 @@ in
       default = "WORKGROUP";
     };
     security = mkOption {
-      type = types.enum;
-      options = [
+      type = types.enum [
         "auto"
         "user"
         "domain"
