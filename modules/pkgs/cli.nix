@@ -73,6 +73,10 @@ in
       ]
       ++ [
         fishPlugins.fifc
+      ]
+      ++ [
+        nixd
+        nixfmt-rfc-style
       ];
   };
 }
