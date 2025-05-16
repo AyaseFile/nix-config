@@ -29,7 +29,10 @@ in
       displayManager = {
         sddm = {
           enable = true;
-          wayland.enable = true;
+          wayland = {
+            enable = true;
+            compositor = "kwin";
+          };
           settings.General.DisplayServer = "wayland";
         };
         autoLogin.enable = false;
