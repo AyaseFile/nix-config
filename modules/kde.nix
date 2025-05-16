@@ -53,7 +53,19 @@ in
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
+      noto-fonts-color-emoji
     ];
+
+    fonts.fontconfig.localConf = ''
+      <match target="font">
+        <test name="family" qual="first">
+          <string>Noto Color Emoji</string>
+        </test>
+        <edit name="antialias" mode="assign">
+          <bool>false</bool>
+        </edit>
+      </match>
+    '';
 
     environment.systemPackages =
       with pkgs;
