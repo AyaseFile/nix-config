@@ -1,3 +1,5 @@
+{ nur-overlays }:
+
 { lib, ... }:
 
 let
@@ -14,7 +16,28 @@ let
     in
     hasSuffix ".nix" pathStr && fileName != "default.nix"
   ) moduleFiles;
+
+  modulesWithArgs = map (
+    modulePath:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      module = import modulePath {
+        inherit
+          config
+          lib
+          pkgs
+          nur-overlays
+          ;
+      };
+    in
+    module
+  ) modules;
 in
 {
-  imports = modules;
+  imports = modulesWithArgs;
 }

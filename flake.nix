@@ -25,8 +25,9 @@
     }:
     let
       inherit (builtins) elem filter;
-      inherit (nixpkgs.lib) genAttrs replaceStrings;
-      inherit (nixpkgs.lib.filesystem) listFilesRecursive;
+      inherit (nixpkgs) lib;
+      inherit (lib) genAttrs replaceStrings;
+      inherit (lib.filesystem) listFilesRecursive;
 
       nameOf = path: replaceStrings [ ".nix" ] [ "" ] (baseNameOf (toString path));
 
@@ -41,6 +42,8 @@
         "gnome"
         "kde"
       ];
+
+      nur-overlays = nur-packages.overlays;
     in
     {
       modules =
@@ -48,7 +51,7 @@
         // {
           secureboot = import ./modules/secureboot.nix { inherit lanzaboote; };
           vscode-server = import ./modules/vscode-server.nix { inherit vscode-server; };
-          pkgs = import ./modules/pkgs;
+          pkgs = import ./modules/pkgs { inherit nur-overlays; };
           podman = import ./modules/podman;
           gnome = import ./modules/gnome.nix { inherit nur-packages; };
           kde = import ./modules/kde.nix { inherit nur-packages; };

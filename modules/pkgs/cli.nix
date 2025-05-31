@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  nur-overlays,
   ...
 }:
 
@@ -14,6 +15,8 @@ let
   cfg = config.modules.pkgs.cli;
 in
 {
+  imports = [ nur-overlays.btop ];
+
   options.modules.pkgs.cli = {
     enable = mkOption {
       type = types.bool;
