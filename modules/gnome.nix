@@ -124,10 +124,6 @@ in
       };
     };
 
-    systemd.sleep.extraConfig = ''
-      AllowSuspend=no
-    '';
-
     environment.extraSetup = ''
       rm $out/share/applications/cups.desktop
     '';
