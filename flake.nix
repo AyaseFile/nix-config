@@ -5,10 +5,6 @@
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vscode-server = {
-      url = "github:nix-community/nixos-vscode-server";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nur-packages = {
       url = "github:AyaseFile/nur-packages/main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,7 +15,6 @@
     {
       nixpkgs,
       lanzaboote,
-      vscode-server,
       nur-packages,
       ...
     }:
@@ -36,7 +31,6 @@
 
       specialModules = [
         "secureboot"
-        "vscode-server"
         "pkgs"
         "podman"
         "gnome"
@@ -50,7 +44,6 @@
         (genAttrs (filter (name: !(elem name specialModules)) modules) (name: import ./modules/${name}.nix))
         // {
           secureboot = import ./modules/secureboot.nix { inherit lanzaboote; };
-          vscode-server = import ./modules/vscode-server.nix { inherit vscode-server; };
           pkgs = import ./modules/pkgs { inherit nur-overlays; };
           podman = import ./modules/podman;
           gnome = import ./modules/gnome.nix { inherit nur-packages; };
