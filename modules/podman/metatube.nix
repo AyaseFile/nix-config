@@ -28,7 +28,7 @@ in
     networking.firewall.allowedTCPPorts = [ cfg.port ];
     virtualisation.podman.enable = true;
 
-    virtualisation.oci-containers.containers."metatube" = {
+    virtualisation.oci-containers.containers.metatube = {
       autoStart = true;
       image = "metatube/metatube-server:latest";
       user = "1000:100";

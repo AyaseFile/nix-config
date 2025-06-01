@@ -103,7 +103,9 @@ in
       gnome-shell
     ];
 
-    services.xserver.excludePackages = [ pkgs.xterm ];
+    services.xserver.excludePackages = with pkgs; [
+      xterm
+    ];
 
     i18n = {
       defaultLocale = "zh_CN.UTF-8";

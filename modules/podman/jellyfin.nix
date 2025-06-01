@@ -36,7 +36,7 @@ in
     networking.firewall.allowedTCPPorts = [ cfg.port ];
     virtualisation.podman.enable = true;
 
-    virtualisation.oci-containers.containers."jellyfin" = {
+    virtualisation.oci-containers.containers.jellyfin = {
       autoStart = true;
       image = "jellyfin/jellyfin:latest";
       user = "1000:100";

@@ -22,12 +22,12 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.direnv = {
+    programs.direnv = with pkgs; {
       enable = true;
-      package = pkgs.direnv;
+      package = direnv;
       nix-direnv = {
         enable = true;
-        package = pkgs.nix-direnv;
+        package = nix-direnv;
       };
     };
   };

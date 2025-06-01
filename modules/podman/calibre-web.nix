@@ -32,7 +32,7 @@ in
     networking.firewall.allowedTCPPorts = [ cfg.port ];
     virtualisation.podman.enable = true;
 
-    virtualisation.oci-containers.containers."calibre-web" = {
+    virtualisation.oci-containers.containers.calibre-web = {
       autoStart = true;
       image = "linuxserver/calibre-web:latest";
       volumes = [

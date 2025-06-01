@@ -28,8 +28,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [
-      pkgs.sbctl
+    environment.systemPackages = with pkgs; [
+      sbctl
     ];
 
     boot.loader.systemd-boot.enable = lib.mkForce false;
