@@ -25,13 +25,12 @@ in
   };
 
   config = mkIf cfg.enable {
-    services.xserver.enable = true;
-    services.xserver.displayManager.gdm = {
+    services.displayManager.gdm = {
       enable = true;
       autoSuspend = false;
       wayland = true;
     };
-    services.xserver.desktopManager.gnome.enable = true;
+    services.desktopManager.gnome.enable = true;
 
     services.displayManager.autoLogin.enable = false;
 
@@ -64,6 +63,7 @@ in
         gnomeExtensions.blur-my-shell
         gnomeExtensions.dash-to-dock
         gnomeExtensions.space-bar
+        gnomeExtensions.system-monitor
       ]
       ++ [
         gnome-firmware
@@ -75,6 +75,7 @@ in
       ];
 
     environment.gnome.excludePackages = with pkgs; [
+      decibels
       epiphany
       geary
       gnome-backgrounds
@@ -95,7 +96,7 @@ in
 
     programs.dconf.enable = true;
 
-    services.xserver.desktopManager.gnome.extraGSettingsOverridePackages = with pkgs; [
+    services.desktopManager.gnome.extraGSettingsOverridePackages = with pkgs; [
       gsettings-desktop-schemas
       mutter
       nautilus
