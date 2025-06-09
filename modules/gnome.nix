@@ -126,7 +126,7 @@ in
     };
 
     environment.extraSetup = ''
-      rm $out/share/applications/cups.desktop
+      rm -f $out/share/applications/cups.desktop
     '';
 
     documentation.nixos.enable = false;
