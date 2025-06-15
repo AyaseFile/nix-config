@@ -75,9 +75,6 @@ in
         kdePackages.kdialog
       ]
       ++ [
-        kde-rounded-corners
-      ]
-      ++ [
         sof-firmware
         fprintd
       ];
