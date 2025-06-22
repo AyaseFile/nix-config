@@ -30,7 +30,7 @@ in
 
     virtualisation.oci-containers.containers.metatube = {
       autoStart = true;
-      image = "metatube/metatube-server:latest";
+      image = "ghcr.io/metatube-community/metatube-server:latest";
       user = "1000:100";
       volumes = [
         "${cfg.configPath}:/config"
