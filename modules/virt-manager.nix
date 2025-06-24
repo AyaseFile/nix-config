@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 
 let
   inherit (lib)
@@ -24,9 +29,23 @@ in
 
     users.groups.libvirtd.members = [ cfg.user ];
 
-    virtualisation.libvirtd.enable = true;
-
-    virtualisation.libvirtd.qemu.swtpm.enable = true;
+    virtualisation.libvirtd = with pkgs; {
+      enable = true;
+      qemu = {
+        package = pkgs.qemu_kvm;
+        runAsRoot = true;
+        swtpm.enable = true;
+        ovmf = {
+          enable = true;
+          packages = [
+            (OVMFFull.override {
+              secureBoot = true;
+              tpmSupport = true;
+            }).fd
+          ];
+        };
+      };
+    };
 
     virtualisation.spiceUSBRedirection.enable = true;
   };
