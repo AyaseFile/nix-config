@@ -42,7 +42,6 @@ in
         bat
         delta
         chafa
-        glow
         less
         ripgrep
       ]
@@ -63,7 +62,6 @@ in
       ++ [
         fastfetch
         starship
-        tealdeer
       ]
       ++ [
         git
