@@ -1,5 +1,3 @@
-{ nur-packages }:
-
 {
   config,
   lib,
@@ -14,9 +12,7 @@ let
     mkForce
     types
     ;
-  nur-pkgs = nur-packages.packages.${pkgs.system};
   cfg = config.modules.kde;
-  rime-ice = nur-pkgs.rime-ice;
 in
 {
   options.modules.kde.enable = mkOption {

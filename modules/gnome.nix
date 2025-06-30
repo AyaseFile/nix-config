@@ -1,5 +1,3 @@
-{ nur-packages }:
-
 {
   config,
   lib,
@@ -14,9 +12,7 @@ let
     mkForce
     types
     ;
-  nur-pkgs = nur-packages.packages.${pkgs.system};
   cfg = config.modules.gnome;
-  rime-ice = nur-pkgs.rime-ice;
 in
 {
   options.modules.gnome.enable = mkOption {
@@ -119,7 +115,7 @@ in
         type = "ibus";
         ibus.engines = with pkgs.ibus-engines; [
           (rime.override {
-            rimeDataPkgs = [ rime-ice ];
+            rimeDataPkgs = with pkgs; [ rime-ice ];
           })
         ];
       };

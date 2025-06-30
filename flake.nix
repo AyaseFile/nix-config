@@ -33,8 +33,6 @@
         "secureboot"
         "pkgs"
         "podman"
-        "gnome"
-        "kde"
       ];
 
       nur-overlays = nur-packages.overlays;
@@ -46,8 +44,6 @@
           secureboot = import ./modules/secureboot.nix { inherit lanzaboote; };
           pkgs = import ./modules/pkgs { inherit nur-overlays; };
           podman = import ./modules/podman;
-          gnome = import ./modules/gnome.nix { inherit nur-packages; };
-          kde = import ./modules/kde.nix { inherit nur-packages; };
         };
     };
 }
