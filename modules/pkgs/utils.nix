@@ -26,19 +26,10 @@ in
       with pkgs;
       [
         libarchive
-        zip
-        unzip
         unar
       ]
       ++ [
-        xz
-        zstd
-      ]
-      ++ [
         par2cmdline
-      ]
-      ++ [
-        jq
       ]
       ++ [
         ffmpeg-full

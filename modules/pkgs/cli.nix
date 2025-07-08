@@ -51,8 +51,9 @@ in
         ncdu
       ]
       ++ [
-        _7zz
         gnutar
+        zstd
+        (if pkgs.config.allowUnfree then _7zz-rar else _7zz)
       ]
       ++ [
         byobu
