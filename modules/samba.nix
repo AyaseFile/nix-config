@@ -45,7 +45,8 @@ in
           "workgroup" = cfg.workgroup;
           "security" = cfg.security;
           "map to guest" = "bad user";
-          "vfs objects" = "streams_xattr";
+          "vfs objects" = "fruit streams_xattr";
+          "fruit:copyfile" = "yes";
         } // cfg.extraOpts;
       } // cfg.shares;
       openFirewall = true;
