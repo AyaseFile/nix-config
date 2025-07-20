@@ -78,7 +78,7 @@ in
       ]
       ++ [
         nixd
-        nixfmt-rfc-style
+        nixfmt
       ];
   };
 }
