@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -9,7 +10,7 @@ let
     mkOption
     mkIf
     types
-    optional
+    concatStringsSep
     ;
   cfg = config.modules.vfio;
 in
@@ -19,25 +20,38 @@ in
       type = types.bool;
       default = false;
     };
-    acsOverride = mkOption {
-      type = types.bool;
-      default = false;
-    };
-    pciIds = mkOption {
+    gpuDevices = mkOption {
       type = types.listOf types.str;
-      default = [ ];
+      default = [
+        "pci_0000_01_00_0"
+        "pci_0000_01_00_1"
+      ];
+    };
+    hostModules = mkOption {
+      type = types.listOf types.str;
+      default = [
+        "nvidia_uvm"
+        "nvidia_drm"
+        "nvidia_modeset"
+        "nvidia"
+      ];
     };
     blacklist = mkOption {
       type = types.listOf types.str;
-      default = [ ];
+      default = [
+        "btmtk"
+        "btintel"
+        "btbcm"
+        "btusb"
+        "bluetooth"
+      ];
+    };
+    vmName = mkOption {
+      type = types.str;
     };
   };
 
   config = mkIf cfg.enable {
-    boot.kernelParams = [
-      ("vfio-pci.ids=" + builtins.concatStringsSep "," cfg.pciIds)
-    ] ++ optional cfg.acsOverride "pcie_acs_override=downstream,multifunction";
-
     boot.kernelModules = [
       "vfio"
       "vfio_pci"
@@ -45,5 +59,36 @@ in
     ];
 
     boot.blacklistedKernelModules = cfg.blacklist;
+
+    virtualisation.libvirtd.hooks.qemu = {
+      "pt" = lib.getExe (
+        pkgs.writeShellApplication {
+          name = "qemu-hook";
+          runtimeInputs = with pkgs; [
+            kmod
+            libvirt
+          ];
+          text = ''
+            if [ "$1" != "${cfg.vmName}" ]; then
+              exit 0;
+            fi
+
+            if [ "$2" == "prepare" ]; then
+              modprobe -r -a ${concatStringsSep " " cfg.hostModules}
+              for dev in ${concatStringsSep " " cfg.gpuDevices}; do
+                virsh nodedev-detach "$dev"
+              done
+            fi
+
+            if [ "$2" == "release" ]; then
+              for dev in ${concatStringsSep " " cfg.gpuDevices}; do
+                virsh nodedev-reattach "$dev"
+              done
+              modprobe -a ${concatStringsSep " " cfg.hostModules}
+            fi
+          '';
+        }
+      );
+    };
   };
 }
