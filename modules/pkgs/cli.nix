@@ -37,6 +37,7 @@ in
         eza
         file
         lsof
+        pv
       ]
       ++ [
         bat
