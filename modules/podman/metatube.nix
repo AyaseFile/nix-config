@@ -7,6 +7,7 @@ let
     types
     ;
   cfg = config.modules.podman.metatube;
+  utils = import ./utils.nix;
 in
 {
   options.modules.podman.metatube = {
@@ -14,24 +15,34 @@ in
       type = types.bool;
       default = false;
     };
+    ver = mkOption {
+      type = types.singleLineStr;
+      default = "latest";
+    };
+    user = mkOption {
+      type = types.singleLineStr;
+    };
+    extraOptions = mkOption {
+      type = types.listOf types.str;
+      default = [ ];
+    };
     port = mkOption {
       type = types.port;
       default = 8080;
     };
     configPath = mkOption {
       type = types.path;
-      default = "/mnt/data/metatube/config";
     };
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [ cfg.port ];
-    virtualisation.podman.enable = true;
-
     virtualisation.oci-containers.containers.metatube = {
       autoStart = true;
-      image = "ghcr.io/metatube-community/metatube-server:latest";
-      user = "1000:100";
+      image = "ghcr.io/metatube-community/metatube-server:${cfg.ver}";
+      podman = {
+        user = cfg.user;
+        sdnotify = "healthy";
+      };
       volumes = [
         "${cfg.configPath}:/config"
       ];
@@ -40,6 +51,7 @@ in
         "-dsn"
         "/config/metatube.db"
       ];
+      extraOptions = utils.genOpts "curl -f http://127.0.0.1:8080 || exit 1" ++ cfg.extraOptions;
     };
   };
 }
