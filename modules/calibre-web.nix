@@ -11,10 +11,10 @@ let
     mkIf
     types
     ;
-  cfg = config.modules.qbee-nox;
+  cfg = config.modules.calibre-web;
 in
 {
-  options.modules.qbee-nox = {
+  options.modules.calibre-web = {
     enable = mkOption {
       type = types.bool;
       default = false;
@@ -31,27 +31,33 @@ in
     };
     port = mkOption {
       type = types.port;
-      default = 8080;
+      default = 8083;
     };
-    profileDir = mkOption {
+    dataDir = mkOption {
+      type = types.path;
+    };
+    calibreLibrary = mkOption {
       type = types.path;
     };
   };
 
   config = mkIf cfg.enable {
-    services.qbittorrent = {
+    services.calibre-web = {
       enable = true;
       user = cfg.user;
       group = cfg.group;
-      webuiPort = cfg.port;
-      profileDir = cfg.profileDir;
-      package = pkgs.qbittorrent-enhanced-nox;
+      listen = {
+        ip = "127.0.0.1";
+        port = cfg.port;
+      };
+      dataDir = cfg.dataDir;
+      options.calibreLibrary = cfg.calibreLibrary;
     };
 
-    systemd.services.qbittorrent.serviceConfig = cfg.serviceConfig;
+    systemd.services.calibre-web.serviceConfig = cfg.serviceConfig;
 
     environment.systemPackages = with pkgs; [
-      qbittorrent-enhanced-nox
+      calibre-web
     ];
   };
 }

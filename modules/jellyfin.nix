@@ -11,10 +11,10 @@ let
     mkIf
     types
     ;
-  cfg = config.modules.qbee-nox;
+  cfg = config.modules.jellyfin;
 in
 {
-  options.modules.qbee-nox = {
+  options.modules.jellyfin = {
     enable = mkOption {
       type = types.bool;
       default = false;
@@ -29,29 +29,23 @@ in
       type = types.attrsOf types.str;
       default = { };
     };
-    port = mkOption {
-      type = types.port;
-      default = 8080;
-    };
-    profileDir = mkOption {
+    configDir = mkOption {
       type = types.path;
     };
   };
 
   config = mkIf cfg.enable {
-    services.qbittorrent = {
+    services.jellyfin = {
       enable = true;
       user = cfg.user;
       group = cfg.group;
-      webuiPort = cfg.port;
-      profileDir = cfg.profileDir;
-      package = pkgs.qbittorrent-enhanced-nox;
+      configDir = cfg.configDir;
     };
 
-    systemd.services.qbittorrent.serviceConfig = cfg.serviceConfig;
+    systemd.services.jellyfin.serviceConfig = cfg.serviceConfig;
 
     environment.systemPackages = with pkgs; [
-      qbittorrent-enhanced-nox
+      jellyfin
     ];
   };
 }
