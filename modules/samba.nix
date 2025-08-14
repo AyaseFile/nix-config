@@ -47,8 +47,10 @@ in
           "map to guest" = "bad user";
           "vfs objects" = "fruit streams_xattr";
           "fruit:copyfile" = "yes";
-        } // cfg.extraOpts;
-      } // cfg.shares;
+        }
+        // cfg.extraOpts;
+      }
+      // cfg.shares;
       openFirewall = true;
     };
 
