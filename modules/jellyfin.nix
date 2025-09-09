@@ -32,6 +32,9 @@ in
     configDir = mkOption {
       type = types.path;
     };
+    dataDir = mkOption {
+      type = types.path;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -40,6 +43,7 @@ in
       user = cfg.user;
       group = cfg.group;
       configDir = cfg.configDir;
+      dataDir = cfg.dataDir;
     };
 
     systemd.services.jellyfin.serviceConfig = cfg.serviceConfig;
