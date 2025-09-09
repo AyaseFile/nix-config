@@ -70,18 +70,6 @@ in
         privileged = privileged;
       };
 
-      security.sudo.extraRules = [
-        {
-          users = [ user ];
-          commands = [
-            {
-              command = "ALL";
-              options = [ "NOPASSWD" ];
-            }
-          ];
-        }
-      ];
-
       modules.linux = {
         enable = true;
         inherit
