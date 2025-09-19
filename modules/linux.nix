@@ -93,8 +93,8 @@ in
           PasswordAuthentication = false;
           KbdInteractiveAuthentication = false;
           Ciphers = [
-            "chacha20-poly1305@openssh.com"
             "aes256-gcm@openssh.com"
+            "chacha20-poly1305@openssh.com"
           ];
           KexAlgorithms = [
             "mlkem768x25519-sha256"
@@ -103,7 +103,6 @@ in
           ];
           Macs = [
             "hmac-sha2-512-etm@openssh.com"
-            "hmac-sha2-256-etm@openssh.com"
           ];
         };
       };
