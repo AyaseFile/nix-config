@@ -32,7 +32,7 @@ in
         par2cmdline
       ]
       ++ [
-        ffmpeg-full
+        ffmpeg_8-headless
         imagemagick
       ];
   };
