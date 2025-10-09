@@ -18,6 +18,10 @@ in
       type = types.bool;
       default = false;
     };
+    rootfs = mkOption {
+      type = types.bool;
+      default = true;
+    };
     swap = {
       enable = mkOption {
         type = types.bool;
@@ -31,7 +35,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    fileSystems = {
+    fileSystems = mkIf cfg.rootfs {
       "/".options = [
         "noatime"
         "compress=zstd"
