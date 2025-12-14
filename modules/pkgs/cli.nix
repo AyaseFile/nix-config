@@ -54,6 +54,7 @@ in
       ++ [
         gnutar
         zstd
+        ouch
         (if pkgs.config.allowUnfree then _7zz-rar else _7zz)
       ]
       ++ [
