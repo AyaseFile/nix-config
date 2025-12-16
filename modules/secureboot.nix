@@ -25,6 +25,10 @@ in
       type = types.bool;
       default = false;
     };
+    msKeys = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -37,6 +41,14 @@ in
     boot.lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
+      autoGenerateKeys.enable = true;
+      autoEnrollKeys = {
+        enable = true;
+        includeMicrosoftKeys = cfg.msKeys;
+        allowBrickingMyMachine = !cfg.msKeys;
+        includeChecksumsFromTPM = true;
+        autoReboot = true;
+      };
     };
   };
 }

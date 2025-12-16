@@ -9,8 +9,11 @@ let
     mkOption
     mkIf
     types
+    optional
     ;
   cfg = config.modules.btrfs;
+
+  mkOpts = [ "noatime" ] ++ optional (cfg.zstd != null) "compress=zstd:${toString cfg.zstd}";
 in
 {
   options.modules.btrfs = {
@@ -18,9 +21,9 @@ in
       type = types.bool;
       default = false;
     };
-    rootfs = mkOption {
-      type = types.bool;
-      default = true;
+    zstd = mkOption {
+      type = types.nullOr types.int;
+      default = null;
     };
     swap = {
       enable = mkOption {
@@ -35,28 +38,12 @@ in
   };
 
   config = mkIf cfg.enable {
-    fileSystems = mkIf cfg.rootfs {
-      "/".options = [
-        "noatime"
-        "compress=zstd"
-      ];
-      "/home".options = [
-        "noatime"
-        "compress=zstd"
-      ];
-      "/nix".options = [
-        "noatime"
-        "compress=zstd"
-      ];
-      "/swap".options = [
-        "noatime"
-      ];
-      "/var/log" = {
-        options = [
-          "noatime"
-          "compress=zstd"
-        ];
-      };
+    fileSystems = {
+      "/".options = mkOpts;
+      "/home".options = mkOpts;
+      "/nix".options = mkOpts;
+      "/swap".options = [ "noatime" ];
+      "/var/log".options = mkOpts;
     };
 
     services.btrfs.autoScrub.enable = true;
