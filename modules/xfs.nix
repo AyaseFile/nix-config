@@ -31,6 +31,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    fileSystems = {
+      "/".options = [ "noatime" ];
+    };
+
     swapDevices = mkIf cfg.swap.enable [ { device = cfg.swap.swapfile; } ];
 
     boot.supportedFilesystems = [ "xfs" ];
