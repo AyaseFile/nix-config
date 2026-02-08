@@ -29,6 +29,10 @@ in
       type = types.bool;
       default = false;
     };
+    tpmChecksums = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -46,7 +50,7 @@ in
         enable = true;
         includeMicrosoftKeys = cfg.msKeys;
         allowBrickingMyMachine = !cfg.msKeys;
-        includeChecksumsFromTPM = true;
+        includeChecksumsFromTPM = cfg.tpmChecksums;
         autoReboot = true;
       };
     };
