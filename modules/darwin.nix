@@ -25,6 +25,9 @@ in
     user = mkOption {
       type = types.singleLineStr;
     };
+    stateVersion = mkOption {
+      type = types.int;
+    };
     rev = mkOption {
       type = types.nullOr types.singleLineStr;
     };
@@ -42,6 +45,7 @@ in
         enable
         uid
         user
+        stateVersion
         rev
         unfree
         flake
@@ -101,7 +105,7 @@ in
       system = {
         primaryUser = user;
         configurationRevision = rev;
-        stateVersion = 6;
+        stateVersion = stateVersion;
       };
     };
 }
